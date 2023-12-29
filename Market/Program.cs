@@ -1,6 +1,19 @@
+using Market.Context;
+using Market.Interfaces;
+using Market.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<MarketContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
+});
+
+builder.Services.AddScoped<IProductService, ProductService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
