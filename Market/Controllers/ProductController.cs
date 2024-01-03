@@ -22,7 +22,7 @@ namespace Market.Controllers
                 IEnumerable<Product> products = _service.GetAll();
 
                 if (!products.Any())
-                    return NotFound("Products not found");
+                    return Ok(Array.Empty<Product>());
 
                 return Ok(products);
             }
@@ -76,7 +76,6 @@ namespace Market.Controllers
                 Price = req.Price,
                 Stock = req.Stock,
                 BarCode = req.BarCode,
-                Category = req.Category,
                 Description = req.Description,
                 IsPublished = req.IsPublished,
                 CreateAt = DateTime.Now,
@@ -101,27 +100,6 @@ namespace Market.Controllers
                         Stock = product.Stock,
                     }
                 });
-            }
-            catch (Exception error)
-            {
-                Log.Error(error.Message);
-
-                throw new Exception($"An unexpected error occurred: {error.Message}");
-            }
-        }
-
-        [HttpGet]
-        [Route("{category}")]
-        public IActionResult GetPublished(string category)
-        {
-            try
-            {
-                IEnumerable<Product> products = _service.GetAll(x => x.Category == category);
-
-                if (!products.Any())
-                    return Ok(Array.Empty<Product>());
-
-                return Ok(products);
             }
             catch (Exception error)
             {
@@ -199,27 +177,6 @@ namespace Market.Controllers
                         Stock = product.Stock,
                     }
                 });
-            }
-            catch (Exception error)
-            {
-                Log.Error(error.Message);
-
-                throw new Exception($"An unexpected error occurred: {error.Message}");
-            }
-        }
-
-        [HttpGet]
-        [Route("{brand}")]
-        public IActionResult GetProductByBrad(string brand)
-        {
-            try
-            {
-                IEnumerable<Product> products = _service.GetAll(x => x.Brand == brand);
-
-                if (products.Any())
-                    return Ok(Array.Empty<Product>());
-
-                return Ok(products);
             }
             catch (Exception error)
             {

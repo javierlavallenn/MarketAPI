@@ -5,7 +5,6 @@
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
-        public string Category { get; set; }
         public string BarCode { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
@@ -13,5 +12,8 @@
         public bool IsPublished { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime UpdateAt { get; set; }
+
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

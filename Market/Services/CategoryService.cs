@@ -3,27 +3,26 @@ using Market.Entities;
 using Market.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Linq.Expressions;
 
 namespace Market.Services
 {
-    public class ProductService(MarketContext context) : IProductService
+    public class CategoryService(MarketContext context) : ICategoryService
     {
         private readonly MarketContext _context = context;
 
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<Category> GetAll()
         {
-            return _context.Products.ToList();
+            return _context.Categories.ToList();
         }
 
-        public Product GetById(Guid id)
+        public Category GetById(Guid id)
         {
-            return _context.Products.Where(x => x.Id == id).FirstOrDefault()!;
+            return _context.Categories.Where(x => x.Id == id).FirstOrDefault()!;
         }
 
-        public bool Create(Product product)
+        public bool Create(Category category)
         {
-            EntityEntry result = _context.Products.Add(product);
+            EntityEntry result = _context.Categories.Add(category);
 
             if (result.State != EntityState.Added)
             {
@@ -35,9 +34,9 @@ namespace Market.Services
             return true;
         }
 
-        public bool Update(Product product)
+        public bool Update(Category category)
         {
-            EntityEntry result = _context.Products.Update(product);
+            EntityEntry result = _context.Categories.Update(category);
 
             if (result.State != EntityState.Modified)
             {
@@ -49,9 +48,9 @@ namespace Market.Services
             return true;
         }
 
-        public bool Delete(Product product)
+        public bool Delete(Category category)
         {
-            EntityEntry result = _context.Products.Remove(product);
+            EntityEntry result = _context.Categories.Remove(category);
 
             if (result.State != EntityState.Deleted)
             {
@@ -61,11 +60,6 @@ namespace Market.Services
             _context.SaveChanges();
 
             return true;
-        }
-
-        public IEnumerable<Product> GetAll(Expression<Func<Product, bool>> expression)
-        {
-            return _context.Products.AsNoTracking().Where(expression).ToList();
         }
     }
 }
